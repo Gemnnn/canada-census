@@ -18,4 +18,5 @@ public class DatabaseUtils {
     public static Connection getConnection(String username, String password) throws SQLException {
         return DriverManager.getConnection(DATABASE_URL, username, password);
     }
+
 }

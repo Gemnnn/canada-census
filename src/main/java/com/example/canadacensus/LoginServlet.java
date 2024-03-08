@@ -27,13 +27,11 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try (Connection connection = DatabaseUtils.getConnection(username, password)) {
-            // Connection successful
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
-            // Redirect
-            response.sendRedirect("geographic-areas.jsp");
+            session.setAttribute("password", password);
+            response.sendRedirect("home.jsp");
         } catch (SQLException e) {
-            // Failed
             request.setAttribute("errorMessage", "Invalid username or password.");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
