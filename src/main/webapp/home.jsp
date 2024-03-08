@@ -15,7 +15,7 @@
 <nav>
     <ul>
         <li><a href="geographic-areas">Geographic Area Classification List</a></li>
-        <li><a href="geographic-detail">Individual Geographic Area Details</a></li>
+        <li><a href="area-details">Individual Geographic Area Details</a></li>
         <li><a href="age-list">Age List</a></li>
     </ul>
 </nav>
