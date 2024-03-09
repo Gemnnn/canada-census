@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: Branden
@@ -8,23 +9,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List, java.util.Map" %>
 <%@ page import="models.GeographicArea" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Geographic Areas</title>
 </head>
 <body>
-<h2>Geographic Area Classification List</h2>
-<% Map<Integer, List<GeographicArea>> areasByLevel = (Map<Integer, List<GeographicArea>>) request.getAttribute("areasByLevel");
-    for (Map.Entry<Integer, List<GeographicArea>> entry : areasByLevel.entrySet()) {
-        int level = entry.getKey();
-        List<GeographicArea> areas = entry.getValue();
-%>
-<h3>Level <%= level %> - <%= level == 0 ? "Country" : level == 1 ? "Provinces and Territories" : level == 2 ? "CMA and CA" : "Provincial parts of CMA/CA" %></h3>
-<ul>
-    <% for (GeographicArea area : areas) { %>
-    <li><%= area.getName() %></li>
-    <% } %>
-</ul>
-<% } %>
+<h2>Geographic Areas Classification List</h2>
+
+<c:forEach var="entry" items="${areasByLevel}">
+    <h3>Level ${entry.key}</h3>
+    <ul>
+        <c:forEach var="area" items="${entry.value}">
+            <li>${area.name} (Code: ${area.code})</li>
+        </c:forEach>
+    </ul>
+</c:forEach>
+
 </body>
 </html>
+

@@ -16,7 +16,6 @@ import java.util.Map;
 @WebServlet(name = "GeographicAreasServlet", urlPatterns = "/geographic-areas")
 public class GeographicAreasServlet extends HttpServlet {
     private GeographicAreaDAO dao = new GeographicAreaDAO();
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         String username = (String) session.getAttribute("username");
@@ -27,14 +26,12 @@ public class GeographicAreasServlet extends HttpServlet {
             return;
         }
 
-        Map<Integer, List<GeographicArea>> areasByLevel = new HashMap<>();
-        for (int level = 0; level <= 3; level++) {
-            areasByLevel.put(level, dao.findAllByLevel(level, username, password));
-        }
-
+        Map<Integer, List<GeographicArea>> areasByLevel = dao.findAllAreasGroupedByLevel(username, password);
         request.setAttribute("areasByLevel", areasByLevel);
         request.getRequestDispatcher("/geographic-areas.jsp").forward(request, response);
+
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -4,9 +4,7 @@ import models.GeographicArea;
 import utils.DatabaseUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class GeographicAreaDAO {
 
@@ -31,6 +29,28 @@ public class GeographicAreaDAO {
         return areas;
     }
 
+    public Map<Integer, List<GeographicArea>> findAllAreasGroupedByLevel(String username, String password) {
+        Map<Integer, List<GeographicArea>> areasByLevel = new HashMap<>();
+        String sql = "SELECT Code, Level, Name FROM geographicarea ORDER BY Level, Name";
+
+        try (Connection conn = DatabaseUtils.getConnection(username, password);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                GeographicArea area = new GeographicArea();
+                area.setName(rs.getString("Name"));
+                area.setCode(rs.getInt("Code"));  // Assuming you want to use 'Code' as the identifier
+                area.setLevel(rs.getInt("Level"));
+                // Since totalPopulation and censusYear might not be relevant here, omit or set default values as needed
+
+                areasByLevel.computeIfAbsent(rs.getInt("Level"), k -> new ArrayList<>()).add(area);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return areasByLevel;
+    }
 
 
     public List<GeographicArea> findAllGeographicAreas(String username, String password) {

@@ -15,9 +15,10 @@
 <body>
 <h2>Population Data</h2>
 <c:forEach items="${ageData}" var="data">
-    <p>Year: ${data.year}</p>
-    <p>Male Population: ${data.malePopulation}</p>
-    <p>Female Population: ${data.femalePopulation}</p>
+    <jsp:useBean id="ageData" class="models.AgeData" scope="request"/>
+    <p>Year: <jsp:getProperty name="ageData" property="year" /></p>
+    <p>Male Population: <jsp:getProperty name="ageData" property="malePopulation" /></p>
+    <p>Female Population: <jsp:getProperty name="ageData" property="femalePopulation" /></p>
     <hr>
 </c:forEach>
 </body>
