@@ -7,9 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import models.GeographicArea;
+import beans.GeographicBean;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class GeographicAreasServlet extends HttpServlet {
             return;
         }
 
-        Map<Integer, List<GeographicArea>> areasByLevel = dao.findAllAreasGroupedByLevel(username, password);
+        Map<Integer, List<GeographicBean>> areasByLevel = dao.findAllAreasGroupedByLevel(username, password);
         request.setAttribute("areasByLevel", areasByLevel);
         request.getRequestDispatcher("/geographic-areas.jsp").forward(request, response);
 

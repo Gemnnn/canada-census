@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import models.AgeData;
+import beans.AgeBean;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +26,7 @@ public class AgeListServlet extends HttpServlet {
             return;
         }
 
-        List<AgeData> ageData = ageDAO.getPopulationDataByYear(username, password);
+        List<AgeBean> ageData = ageDAO.getPopulationDataByYear(username, password);
         request.setAttribute("ageData", ageData);
         request.getRequestDispatcher("/age-list.jsp").forward(request, response);
     }

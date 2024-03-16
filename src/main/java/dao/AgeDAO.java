@@ -1,6 +1,6 @@
 package dao;
 
-import models.AgeData;
+import beans.AgeBean;
 import utils.DatabaseUtils;
 
 import java.sql.*;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AgeDAO {
-public List<AgeData> getPopulationDataByYear(String username, String password) {
-        List<AgeData> ageDataList = new ArrayList<>();
+public List<AgeBean> getPopulationDataByYear(String username, String password) {
+        List<AgeBean> ageBeanList = new ArrayList<>();
 
         // These are the codes referencing all ages and Canada in the Canada Census DB
         final int ALL_AGES_CODE = 1;
@@ -26,7 +26,7 @@ public List<AgeData> getPopulationDataByYear(String username, String password) {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                ageDataList.add(new AgeData(
+                ageBeanList.add(new AgeBean(
                         rs.getInt("censusYear"),
                         rs.getLong("male"),
                         rs.getLong("female")
@@ -35,6 +35,6 @@ public List<AgeData> getPopulationDataByYear(String username, String password) {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return ageDataList;
+        return ageBeanList;
     }
 }

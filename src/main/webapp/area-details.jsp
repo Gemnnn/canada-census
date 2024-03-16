@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="models.GeographicArea" %>
+<%@ page import="beans.GeographicBean" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -31,7 +31,6 @@
                     <input type="submit" value="Detail">
                 </form>
 
-                <!-- Display the details for the selected area -->
                 <c:if test="${not empty selectedAreaDetail}">
                     <div class="p-2">
                         <h3>Details for ${selectedAreaDetail.name}:</h3>

@@ -1,12 +1,12 @@
-package models;
+package beans;
 
-public class AgeData {
+public class AgeBean {
     private int year;
     private long malePopulation;
     private long femalePopulation;
 
     // Constructor
-    public AgeData(int year, long malePopulation, long femalePopulation) {
+    public AgeBean(int year, long malePopulation, long femalePopulation) {
         this.year = year;
         this.malePopulation = malePopulation;
         this.femalePopulation = femalePopulation;

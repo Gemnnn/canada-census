@@ -1,6 +1,6 @@
-package models;
+package beans;
 
-public class GeographicArea {
+public class GeographicBean {
     private String name;
     private int code;
     private int level;
@@ -10,10 +10,10 @@ public class GeographicArea {
     private int geographicAreaID;
 
     // Constructors
-    public GeographicArea() {
+    public GeographicBean() {
     }
 
-    public GeographicArea(String name, int code, int level, int totalPopulation, int geographicAreaID) {
+    public GeographicBean(String name, int code, int level, int totalPopulation, int geographicAreaID) {
         this.name = name;
         this.code = code;
         this.level = level;
