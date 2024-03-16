@@ -26,8 +26,7 @@ public class AgeListServlet extends HttpServlet {
             return;
         }
 
-        int[] years = {2016, 2021};
-        List<AgeData> ageData = ageDAO.getPopulationDataByYear(years, username, password);
+        List<AgeData> ageData = ageDAO.getPopulationDataByYear(username, password);
         request.setAttribute("ageData", ageData);
         request.getRequestDispatcher("/age-list.jsp").forward(request, response);
     }

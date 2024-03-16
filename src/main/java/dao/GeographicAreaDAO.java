@@ -61,7 +61,7 @@ public class GeographicAreaDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                areas.add(new GeographicArea(rs.getString("name"), rs.getInt("geographicAreaID"), 0, 0)); // Dummy level and population
+                areas.add(new GeographicArea(rs.getString("name"), 0, 0, 0, rs.getInt("geographicAreaID"))); // Dummy code, level and population
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,10 +70,10 @@ public class GeographicAreaDAO {
     }
 
     public Optional<GeographicArea> findAreaDetailsByGeographicAreaID(int geographicAreaID, String username, String password) {
-        String sql = "SELECT g.name, g.geographicAreaID, g.level, a.combined AS totalPopulation " +
+        String sql = "SELECT g.name, g.code, g.level, a.combined AS totalPopulation, g.geographicAreaID " +
                 "FROM geographicarea g " +
                 "JOIN age a ON g.geographicAreaID = a.geographicArea " +
-                "WHERE g.geographicAreaID = ? AND a.censusYear = 2021";
+                "WHERE g.geographicAreaID = ? AND a.censusYear = 1 AND a.ageGroup = 1";
 
         try (Connection conn = DatabaseUtils.getConnection(username, password);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -82,9 +82,10 @@ public class GeographicAreaDAO {
             if (rs.next()) {
                 return Optional.of(new GeographicArea(
                         rs.getString("name"),
-                        rs.getInt("geographicAreaID"),
+                        rs.getInt("code"),
                         rs.getInt("level"),
-                        rs.getInt("totalPopulation")
+                        rs.getInt("totalPopulation"),
+                        rs.getInt("geographicAreaID")
                 ));
             }
         } catch (SQLException e) {

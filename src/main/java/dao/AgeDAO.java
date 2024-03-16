@@ -8,23 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AgeDAO {
-
-    public List<AgeData> getPopulationDataByYear(int[] years, String username, String password) {
+public List<AgeData> getPopulationDataByYear(String username, String password) {
         List<AgeData> ageDataList = new ArrayList<>();
-        String sql = "SELECT censusYear, SUM(male) AS totalMale, SUM(female) AS totalFemale " +
-                "FROM age WHERE censusYear IN (?, ?) GROUP BY censusYear";
+
+        // These are the codes referencing all ages and Canada in the Canada Census DB
+        final int ALL_AGES_CODE = 1;
+        final int CANADA_CODE = 1;
+
+        String sql = "SELECT c.censusYear, male, female FROM age AS a " +
+                "JOIN censusyear AS c ON c.censusYearID = a.censusYear " +
+                "WHERE a.ageGroup = ? AND a.geographicArea = ?";
 
         try (Connection conn = DatabaseUtils.getConnection(username, password);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, years[0]);
-            stmt.setInt(2, years[1]);
+            stmt.setInt(1, ALL_AGES_CODE);
+            stmt.setInt(2, CANADA_CODE);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 ageDataList.add(new AgeData(
                         rs.getInt("censusYear"),
-                        rs.getLong("totalMale"),
-                        rs.getLong("totalFemale")
+                        rs.getLong("male"),
+                        rs.getLong("female")
                 ));
             }
         } catch (SQLException e) {

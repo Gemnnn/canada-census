@@ -13,20 +13,27 @@
 
 <html>
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Geographic Areas</title>
 </head>
 <body>
-<h2>Geographic Areas Classification List</h2>
-
-<c:forEach var="entry" items="${areasByLevel}">
-    <h3>Level ${entry.key}</h3>
-    <ul>
-        <c:forEach var="area" items="${entry.value}">
-            <li>${area.name} (Code: ${area.code})</li>
-        </c:forEach>
-    </ul>
-</c:forEach>
-
+    <div class="container-fluid text-center pb-3">
+        <h2>Geographic Areas Classification List</h2>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <c:forEach var="entry" items="${areasByLevel}">
+                <div class="col-3">
+                    <h4>Level ${entry.key}</h4>
+                    <ul>
+                        <c:forEach var="area" items="${entry.value}">
+                            <li>${area.name} (Code: ${area.code})</li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
 </body>
 </html>
 
