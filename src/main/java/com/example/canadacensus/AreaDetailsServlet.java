@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import beans.GeographicBean;
+import beans.GeographicAreaBean;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +21,7 @@ public class AreaDetailsServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String username = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");
-        List<GeographicBean> areas = dao.findAllGeographicAreas(username, password);
+        List<GeographicAreaBean> areas = dao.findAllGeographicAreas(username, password);
         request.setAttribute("areas", areas);
 
         request.getRequestDispatcher("/area-details.jsp").forward(request, response);
@@ -39,10 +39,10 @@ public class AreaDetailsServlet extends HttpServlet {
         }
 
         int geographicAreaID = Integer.parseInt(request.getParameter("areaCode"));
-        Optional<GeographicBean> areaDetail = dao.findAreaDetailsByGeographicAreaID(geographicAreaID, username, password);
+        Optional<GeographicAreaBean> areaDetail = dao.findAreaDetailsByGeographicAreaID(geographicAreaID, username, password);
 
         request.setAttribute("selectedAreaDetail", areaDetail.orElse(null)); // For displaying the selected area details
-        List<GeographicBean> areas = dao.findAllGeographicAreas(username, password);
+        List<GeographicAreaBean> areas = dao.findAllGeographicAreas(username, password);
         request.setAttribute("areas", areas);
 
         request.getRequestDispatcher("/area-details.jsp").forward(request, response);
